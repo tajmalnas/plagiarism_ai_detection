@@ -5,6 +5,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import crawl  
 from ai_detect import generate_ai_essay, check_ai_similarity  
 import os
+from grading import grade_essay  # Importing the grading module
 
 def calculate_tfidf_similarity(essay, docs):
     """
@@ -32,18 +33,17 @@ def save_ai_essays(topic, ai_essays):
     # Append if file exists, otherwise create new
     df.to_csv("ai_generated_essays.csv", mode="a", header=not file_exists, index=False, encoding="utf-8")
 
-
 def main():
-    st.title("Plagiarism & AI Detection")
+    st.title("Plagiarism, AI Detection & Essay Grading")
     topic = st.text_input("Enter the Topic:")
     essay_text = st.text_area("Paste your Essay:")
     
-    if st.button("Check for Plagiarism & AI Detection"):
+    if st.button("Check Essay"):
         if topic and essay_text:
-            st.write("Fetching documents related to topic:", topic)
+            st.write("### Fetching documents related to topic:", topic)
             docs = crawl.get_docs(topic, num_results=10)
             
-            st.write("Calculating similarity scores...")
+            st.write("### Calculating similarity scores...")
             similarity_results = calculate_tfidf_similarity(essay_text, docs)
             
             st.write("### Plagiarism Report:")
@@ -86,8 +86,23 @@ def main():
             else:
                 st.success("✅ Low similarity with AI-generated essays. Likely original content.")
 
+            # **Essay Grading with Detailed Feedback**
+            if topic and essay_text:
+             st.write("### 📊 Evaluating Essay Quality...")
+             # Call the grading function
+             final_score, feedback = grade_essay(topic, essay_text)
+             # Display final score with a progress bar
+             st.subheader(f"🏆 Final Score: **{final_score*6/10} / 10**")
+             st.progress(final_score / 10)  # Convert to a fraction of 10
+             # Loop through each criterion and display it in an expandable section
+             for criterion, details in feedback.items():
+                 with st.expander(f"📌 {criterion} (Score: {details['Score']}/100)"):
+                     st.markdown(f"**📝 Justification:** {details['Justification']}")
+                     st.success(f"✅ **Strengths:** {details['Strengths']}")
+                     st.warning(f"⚠️ **Areas for Improvement:** {details['Areas for Improvement']}")
+
         else:
-            st.warning("Please enter both topic and essay text.")
+            st.warning("⚠️ Please enter both the topic and the essay text.")
 
 if __name__ == "__main__":
     main()
