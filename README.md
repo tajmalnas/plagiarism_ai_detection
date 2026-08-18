@@ -424,43 +424,6 @@ Various datasets and analysis results can be stored in CSV format for further an
 
 ---
 
-## 👥 Team & Contributions
-
-This project was developed collaboratively as a **Final Year Project**.
-
-### My Contributions — Divyank Panwar
-
-I worked as part of the team on the **core plagiarism detection and web crawling components** of the system.
-
-My contributions included:
-
-* Contributed to the design and implementation of the **plagiarism detection pipeline**.
-* Implemented and integrated **TF-IDF-based text representation and cosine similarity analysis** for identifying textual similarity.
-* Contributed to the development of the **web crawling pipeline** for retrieving relevant online content.
-* Worked on **web-page text extraction and preprocessing** to prepare retrieved content for similarity analysis.
-* Contributed to testing and evaluating the plagiarism detection workflow.
-
-### Team
-
-The project was developed collaboratively with:
-
-* **Divyank Panwar** — Plagiarism Detection & Web Crawling
-* **Tajmalnas** — Collaborative development and other project components
-
----
-
-## ⚠️ Limitations
-
-The current implementation has several limitations:
-
-* TF-IDF and cosine similarity primarily identify lexical similarity and may not detect heavily paraphrased content effectively.
-* The quality of plagiarism detection depends on the relevance and availability of retrieved web sources.
-* Web-page structure can affect the quality of extracted text.
-* AI-content analysis is similarity-based and should not be considered definitive proof of AI authorship.
-* External APIs require valid API credentials and may have usage limitations.
-* Results can vary depending on the retrieved documents and input essay.
-
----
 
 ## 🔮 Future Improvements
 
